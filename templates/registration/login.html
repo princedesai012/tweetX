@@ -1,0 +1,94 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Login - tweetX
+{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center mt-5">
+    <div class="card login-card shadow-lg">
+        <div class="card-body">
+            <h2 class="text-center fw-bold mb-4"><i class="fas fa-sign-in-alt"></i> Login</h2>
+            
+            <form method="post" class="needs-validation">
+                {% csrf_token %}
+                
+                <!-- Render Form Fields -->
+                <div class="mb-3">
+                    {{ form.as_p }}
+                </div>
+
+                <!-- Login Button -->
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                </div>
+            </form>
+
+            <!-- Register Link -->
+            <p class="text-center mt-3">
+                <a href="{% url 'register' %}" class="text-light text-decoration-none">
+                    Don't have an account? <span class="fw-bold text-primary">Register here</span>
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Custom Styles -->
+<style>
+    /* Login Card */
+    .login-card {
+        max-width: 400px;
+        width: 100%;
+        background: #27293d;
+        color: #fff;
+        padding: 25px;
+        border-radius: 12px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .login-card:hover {
+        box-shadow: 0 4px 15px rgba(0, 255, 180, 0.2);
+    }
+
+    /* Input Fields */
+    input {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #fff;
+        padding: 10px;
+        border-radius: 8px;
+        width: 100%;
+        transition: all 0.3s ease-in-out;
+    }
+
+    input:focus {
+        background: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 0 10px rgba(0, 255, 180, 0.3);
+        outline: none;
+    }
+
+    /* Login Button */
+    .btn-primary {
+        background: linear-gradient(135deg, #18bc9c 0%, #16a085 100%);
+        border: none;
+        border-radius: 30px;
+        font-weight: 600;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #16a085 0%, #18bc9c 100%);
+        transform: scale(1.05);
+    }
+
+    /* Register Link */
+    .text-light:hover {
+        color: #18bc9c !important;
+    }
+
+</style>
+
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {% if form.instance.pk %}Edit Tweet{% else %}Create a New Tweet{% endif %} - tweetX
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4 fw-bold">
+        {% if form.instance.pk %}
+            <i class="fas fa-edit"></i> Edit Tweet
+        {% else %}
+            <i class="fas fa-plus-circle"></i> Create a New Tweet
+        {% endif %}
+    </h1>
+
+    <div class="card shadow-lg mx-auto tweet-form-card">
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data" class="needs-validation">
+                {% csrf_token %}
+                
+                <!-- Tweet Text Field -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">{{ form.text.label }}</label>
+                    {{ form.text }}
+                    {% if form.text.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.text.errors|join:", " }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Tweet Photo Upload -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">{{ form.photo.label }}</label>
+                    {{ form.photo }}
+                    {% if form.photo.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.photo.errors|join:", " }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-paper-plane"></i> Submit
+                    </button>
+                    <a href="{% url 'tweet_list' %}" class="btn btn-outline-secondary btn-lg">
+                        <i class="fas fa-arrow-left"></i> Back to List
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Custom Styles -->
+<style>
+    /* Form Container */
+    .tweet-form-card {
+        max-width: 600px;
+        background: #27293d;
+        color: #fff;
+        border-radius: 12px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .tweet-form-card:hover {
+        box-shadow: 0 4px 15px rgba(0, 255, 180, 0.2);
+    }
+
+    /* Form Input Fields */
+    input[type="text"], textarea, input[type="file"] {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #fff;
+        padding: 10px;
+        border-radius: 8px;
+        width: 100%;
+        transition: all 0.3s ease-in-out;
+    }
+
+    input:focus, textarea:focus {
+        background: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 0 10px rgba(0, 255, 180, 0.3);
+        outline: none;
+    }
+
+    /* Buttons */
+    .btn-primary {
+        background: linear-gradient(135deg, #18bc9c 0%, #16a085 100%);
+        border: none;
+        border-radius: 30px;
+        font-weight: 600;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #16a085 0%, #18bc9c 100%);
+        transform: scale(1.05);
+    }
+
+    .btn-outline-secondary:hover {
+        transform: scale(1.05);
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+</style>
+
+{% endblock %}

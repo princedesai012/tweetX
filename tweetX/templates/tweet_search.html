@@ -1,0 +1,111 @@
+{% extends "layout.html" %}
+
+{% block title %}
+tweetX - Search Results
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4 fw-bold">Welcome to tweetX</h1>
+
+    <!-- Search Form -->
+    <div class="text-center mb-4">
+        <form method="get" action="{% url 'tweet_search' %}" class="d-flex justify-content-center">
+            <input type="text" name="q" class="form-control w-50 me-2" placeholder="Search tweets..." value="{{ request.GET.q }}">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-search"></i> Search
+            </button>
+        </form>
+    </div>
+
+    <!-- Clear Search Link -->
+    {% if request.GET.q %}
+        <div class="text-center mb-4">
+            <a href="{% url 'tweet_list' %}" class="btn btn-secondary">
+                <i class="fas fa-times"></i> Clear Search
+            </a>
+        </div>
+    {% endif %}
+
+    <!-- Tweet Cards Grid -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for tweetX in tweets %}
+        <div class="col">
+            <div class="card tweet-card h-100 shadow-sm">
+                
+                <!-- Tweet Photo -->
+                {% if tweetX.photo %}
+                    <img src="{{ tweetX.photo.url }}" class="card-img-top img-fluid rounded-top" alt="Tweet Photo">
+                {% else %}
+                    <div class="card-img-top d-flex align-items-center justify-content-center bg-dark text-light" style="height: 200px;">
+                        <i class="fas fa-image fa-2x"></i> 
+                        <span class="ms-2">No photo available</span>
+                    </div>
+                {% endif %}
+
+                <!-- Tweet Body -->
+                <div class="card-body">
+                    <h5 class="card-title d-flex align-items-center">
+                        <i class="fas fa-user-circle me-2"></i> {{ tweetX.user.username }}
+                    </h5>
+                    <p class="card-text">{{ tweetX.text }}</p>
+                </div>
+
+                <!-- Edit and Delete Buttons -->
+                {% if tweetX.user == user %}
+                <div class="card-footer bg-transparent border-0 d-flex justify-content-between">
+                    <a href="{% url 'tweet_edit' tweetX.id %}" class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                    <a href="{% url 'tweet_delete' tweetX.id %}" class="btn btn-sm btn-outline-danger">
+                        <i class="fas fa-trash"></i> Delete
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <p class="text-muted">No tweets found.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Custom Styles -->
+<style>
+    .tweet-card {
+        background: #27293d;
+        color: #fff;
+        border-radius: 12px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .tweet-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 12px rgba(0, 255, 180, 0.2);
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #18bc9c 0%, #16a085 100%);
+        border: none;
+        border-radius: 30px;
+        font-weight: 600;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #16a085 0%, #18bc9c 100%);
+        transform: scale(1.05);
+    }
+
+    .card-footer .btn {
+        transition: all 0.3s ease-in-out;
+    }
+
+    .card-footer .btn:hover {
+        transform: scale(1.1);
+    }
+</style>
+
+{% endblock %}
