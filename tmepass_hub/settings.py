@@ -130,6 +130,6 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 LOGIN_URL = '/accounts/login'
-
+CSRF_TRUSTED_ORIGINS = ['https://bca4-2409-40c1-4026-3744-fd74-34b1-e703-127d.ngrok-free.app']
 LOGIN_REDIRECT_URL = '/tweetX/'
 LOGOUT_REDIRECT_URL = '/tweetX/'

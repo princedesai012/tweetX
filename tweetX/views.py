@@ -37,7 +37,7 @@ def tweet_create(request):
             tweet = form.save(commit=False)#false means not save in database
             tweet.user = request.user
             tweet.save()
-            return redirect('tweet_list')
+            return redirect('tweetX_list')
     else:
         form = tweetXForm()
     return render(request, 'tweetX_form.html', {'form': form})
@@ -73,7 +73,7 @@ def register(request):
             user.set_password(form.cleaned_data['password1'])
             user.save()
             login(request, user)
-            return redirect('tweet_list')            
+            return redirect('tweetX_list')            
     else:
         form = UserRegistrationForm()
     return render(request, 'registration/register.html', {'form': form})
